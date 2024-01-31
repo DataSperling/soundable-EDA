@@ -2,4 +2,4 @@
 *.ipynb_checkpoints
 
 # ignore audio file as wastes space
-.XC824126-Agapornis-swindernianus.mp3
+*.XC824126-Agapornis-swindernianus.mp3
