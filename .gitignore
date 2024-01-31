@@ -1,0 +1,5 @@
+#ignore persistent backup
+*.ipynb_checkpoints
+
+# ignore audio file as wastes space
+.XC824126-Agapornis-swindernianus.mp3
