@@ -13,7 +13,7 @@ SAMPLING_FREQUENCY = 44100;   # frequency in Hz / s-1
 SAMPLE_DURATION  = 4;         # time in s 
 NO_SAMPLES = SAMPLING_FREQUENCY * SAMPLE_DURATION
 
-# step 1 define function to generate periodic sinwave
+# define function to generate periodic sinwave
 def gen_simple_sinwave(frequency, rate, duration):
   x = np.linspace(0, duration, (rate*duration), endpoint=False)
   frequencies = x*frequency
@@ -35,13 +35,13 @@ write('sig_comp.wav', SAMPLING_FREQUENCY, sig_comp)
 
 
 
-# step 3 calculate FFT of generated waveform
+# calculate FFT of generated waveform
 fy = rfft(sig_comp)
 fx = rfftfreq(NO_SAMPLES, 1/SAMPLING_FREQUENCY)
 plt.plot(fx, np.abs(fy))
 plt.show()
 
-# step 4 check by subtraction of the FT's that the algorithmically generated FFT
+# check by subtraction of the FT's that the algorithmically generated FFT
 # and the FFT from waveform analysis are the same
 
 print("EOF---EOF---EOF")
