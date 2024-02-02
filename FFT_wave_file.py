@@ -29,20 +29,21 @@ _, sig_2 = gen_simple_sinwave(200, SAMPLE_FREQUENCY, SAMPLING_DURATION)
 _, sig_3 = gen_simple_sinwave(800, SAMPLE_FREQUENCY, SAMPLING_DURATION)
 sig_comp = sig_1 + (0.4*sig_2) + (0.2*sig_3)
 plt.figure(figsize=(20,10))
-plt.plot(sig_comp[:3000])
-plt.title('800Hz, 200Hz, 100Hz Composite Signal in 1:2:5 Intensity')
-plt.ylabel('Relative Intensity')
-plt.xlabel('Sample Number')
+plt.plot(sig_comp[:3000], color='red')
+plt.title('800Hz, 200Hz, 100Hz Composite Signal in 1:2:5 Intensity',
+          fontsize=25)
+plt.ylabel('f(x)', fontsize=20)
+plt.xlabel('Sample Number', fontsize=20)
 plt.show()
 
 
 # Normalise composite signal for 16-bit "type"
 sig_norm = np.int16( (sig_comp / sig_comp.max() ) * 32767)
 plt.figure(figsize=(20,10))
-plt.plot(sig_norm[:3000])
-plt.title('800Hz, 200Hz, 100Hz Normalised Signal in 1:2:5 Intensity')
-plt.ylabel('Relative Intensity')
-plt.xlabel('Sample Number')
+plt.plot(sig_norm[:3000], color='green')
+plt.title('800Hz, 200Hz, 100Hz Normalised Signal in 1:2:5 Intensity', fontsize=25)
+plt.ylabel('f(x)', fontsize=20)
+plt.xlabel('Sample Number', fontsize=20)
 plt.show()
 
 
@@ -53,7 +54,14 @@ write('test_sample.wav', SAMPLE_FREQUENCY, sig_norm)
 # Plot FFT to check 3 frequencies present at correct intensities (5:2:1)
 yj = rfft(sig_norm)
 xj = rfftfreq(N, 1/SAMPLE_FREQUENCY)
-plt.plot(xj, np.abs(yj))
+plt.figure(figsize=(20,10))
+plt.plot(xj, np.abs(yj), color='blue')
+plt.title('FFT (SciPy.fft) 800Hz, 200Hz, 100Hz Normalised Signal in 1:2:5 Intensity',
+          fontsize=25)
+plt.ylabel('Relative Intensity',
+          fontsize=20)
+plt.xlabel('Frequency (Hz)',
+          fontsize=20)
 plt.xlim(0, 1000)
 plt.show()
 
