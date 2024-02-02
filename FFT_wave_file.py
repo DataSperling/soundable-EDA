@@ -10,51 +10,62 @@ from scipy.io.wavfile import write
 from scipy.fft import fft, fftfreq, rfft, rfftfreq
 import wave
 
-SAMPLING_FREQUENCY = 44100;   # frequency in Hz / s-1
-SAMPLE_DURATION  = 4;         # time in s 
-NO_SAMPLES = SAMPLING_FREQUENCY * SAMPLE_DURATION
+SAMPLE_FREQUENCY = 44100;                 # frequency (Hz)
+SAMPLING_DURATION  = 4;                   # time (s)
+N = SAMPLE_FREQUENCY * SAMPLING_DURATION  # number of samples
 
-# define function to generate periodic sinwave
+
+# Generate periodic signal of geiven frequency
 def gen_simple_sinwave(frequency, rate, duration):
   x = np.linspace(0, duration, (rate*duration), endpoint=False)
   frequencies = x*frequency
   y = np.sin( (np.pi*2) * frequencies)
   return x,y
 
-# step 2 use function to generate composite sample and save as 16bit waveform file
-_, sig_low = gen_simple_sinwave(150, SAMPLING_FREQUENCY, SAMPLE_DURATION)
-sig_low = sig_low*0.3
-_, sig_med = gen_simple_sinwave(600, SAMPLING_FREQUENCY, SAMPLE_DURATION)
-sig_med = sig_med*0.6
-_, sig_hi  = gen_simple_sinwave(2400, SAMPLING_FREQUENCY, SAMPLE_DURATION)
-sig_hi  = sig_hi*0.9
-sig_comp = sig_low + sig_med + sig_hi
-#plt.plot(sig_comp[:1000])
-#plt.show()
-write('sig_comp.wav', SAMPLING_FREQUENCY, sig_comp.astype(np.int16))
 
-
-
-# calculate FFT of generated waveform
-fy = rfft(sig_comp)
-fx = rfftfreq(NO_SAMPLES, 1/SAMPLING_FREQUENCY)
-#plt.plot(fx, np.abs(fy))
-#plt.show()
-
-# check by subtraction of the FT's that the algorithmically generated FFT
-# and the FFT from waveform analysis are the same
-wav_sample = wave.open('sig_comp.wav')
-print(" sample rate: ", wav_sample.getframerate(), "\n",
-"number samples: ", wav_sample.getnframes(), "\n",
-"number channels: ", wav_sample.getnchannels(), "\n")
-
-signal_wave = wav_sample.readframes(wav_sample.getnframes())
-signal_array = np.frombuffer(signal_wave, dtype=np.int16)
-fy = rfft(signal_array)
-fx = rfftfreq(wav_sample.getnframes(), 1/wav_sample.getframerate())
-plt.plot(fx, np.abs(fy) )
+# Simulate composite signal consisting of 3 frequencies with weighting
+_, sig_1 = gen_simple_sinwave(100, SAMPLE_FREQUENCY, SAMPLING_DURATION)
+_, sig_2 = gen_simple_sinwave(200, SAMPLE_FREQUENCY, SAMPLING_DURATION)
+_, sig_3 = gen_simple_sinwave(800, SAMPLE_FREQUENCY, SAMPLING_DURATION)
+sig_comp = sig_1 + (0.4*sig_2) + (0.2*sig_3)
+plt.figure(figsize=(20,10))
+plt.plot(sig_comp[:3000])
+plt.title('800Hz, 200Hz, 100Hz Composite Signal in 1:2:5 Intensity')
+plt.ylabel('Relative Intensity')
+plt.xlabel('Sample Number')
 plt.show()
 
 
+# Normalise composite signal for 16-bit "type"
+sig_norm = np.int16( (sig_comp / sig_comp.max() ) * 32767)
+plt.plot(sig_norm[:3000])
+plt.show()
 
-print("EOF---EOF---EOF")
+
+# Export composite signal for input processing later
+write('test_sample.wav', SAMPLE_FREQUENCY, sig_norm)
+
+
+# Plot FFT to check 3 frequencies present at correct intensities (5:2:1)
+yj = rfft(sig_norm)
+xj = rfftfreq(N, 1/SAMPLE_FREQUENCY)
+plt.plot(xj, np.abs(yj))
+plt.xlim(0, 1000)
+plt.show()
+
+
+# Check parameters of exported audio before plotting FFT
+try:
+  test_sample = wave.open('test_sample.wav')
+  number_samples = test_sample.getnframes()
+  print(' sample rate: ', test_sample.getframerate(), '\n',
+        'number channels: ', test_sample.getnchannels(), '\n',
+        'number samples: ', number_samples, '\n',
+        'duration audio: ', number_samples / test_sample.getframerate())
+
+finally:
+  test_sample.close()
+
+
+
+print("EOF---EOF---EOF---EOF---EOF---EOF---EOF---EOF---EOF---EOF---EOF---EOF")
