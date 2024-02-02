@@ -38,7 +38,11 @@ plt.show()
 
 # Normalise composite signal for 16-bit "type"
 sig_norm = np.int16( (sig_comp / sig_comp.max() ) * 32767)
+plt.figure(figsize=(20,10))
 plt.plot(sig_norm[:3000])
+plt.title('800Hz, 200Hz, 100Hz Normalised Signal in 1:2:5 Intensity')
+plt.ylabel('Relative Intensity')
+plt.xlabel('Sample Number')
 plt.show()
 
 
