@@ -81,7 +81,7 @@ try:
   yk = rfft(sig_arr)
   xk = rfftfreq(number_samples, 1/sample_rate)
   plt.figure(figsize=(20,10))
-  plt.plot(xk, np.abs(yk), color='black')
+  plt.plot(xk, np.abs(yk), color='purple')
   plt.title('FFT (SciPy.rfft) 800Hz, 200Hz, 100Hz Real Signal',
             fontsize=25)
   plt.ylabel('Relative Intensity',
