@@ -56,7 +56,7 @@ yj = rfft(sig_norm)
 xj = rfftfreq(N, 1/SAMPLE_FREQUENCY)
 plt.figure(figsize=(20,10))
 plt.plot(xj, np.abs(yj), color='blue')
-plt.title('FFT (SciPy.fft) 800Hz, 200Hz, 100Hz Normalised Signal in 1:2:5 Intensity',
+plt.title('FFT (SciPy.rfft) 800Hz, 200Hz, 100Hz Simulated Signal in 1:2:5 Intensity',
           fontsize=25)
 plt.ylabel('Relative Intensity',
           fontsize=20)
@@ -70,11 +70,27 @@ plt.show()
 try:
   test_sample = wave.open('test_sample.wav')
   number_samples = test_sample.getnframes()
-  print(' sample rate: ', test_sample.getframerate(), '\n',
+  sample_rate = test_sample.getframerate()
+  print('sample rate: ', sample_rate, '\n',
         'number channels: ', test_sample.getnchannels(), '\n',
         'number samples: ', number_samples, '\n',
         'duration audio: ', number_samples / test_sample.getframerate())
 
+# Plot FFT
+  sig_wav = test_sample.readframes(number_samples)
+  sig_arr = np.frombuffer(sig_wav, dtype=np.int16)      
+  yk = rfft(sig_arr)
+  xk = rfftfreq(number_samples, 1/sample_rate)
+  plt.figure(figsize=(20,10))
+  plt.plot(xk, np.abs(yk), color='black')
+  plt.title('FFT (SciPy.rfft) 800Hz, 200Hz, 100Hz Real Signal',
+            fontsize=25)
+  plt.ylabel('Relative Intensity',
+             fontsize=20)
+  plt.xlabel('Frequency (Hz)',
+             fontsize=20)
+  plt.xlim(0, 1000)
+  plt.show()
 finally:
   test_sample.close()
 
