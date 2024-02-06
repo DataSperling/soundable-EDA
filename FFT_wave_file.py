@@ -1,7 +1,6 @@
 """
-script to test the methods scipy.fft, fft fftfreq, rfft and rfftfreq produce
-consistent (normalisable) output when applied to calculated and measured .wav
-type audio
+Test of methods scipy.fft, fft fftfreq, rfft and rfftfreq produce consistent 
+(normalisable) output when applied to simulated and measured (.wav type) audio
 """
 
 import numpy as np
@@ -15,7 +14,7 @@ SAMPLING_DURATION  = 4;                   # time (s)
 N = SAMPLE_FREQUENCY * SAMPLING_DURATION  # number of samples
 
 
-# Generate periodic signal of geiven frequency
+# Generate periodic signal of given frequency
 def gen_simple_sinwave(frequency, rate, duration):
   x = np.linspace(0, duration, (rate*duration), endpoint=False)
   frequencies = x*frequency
