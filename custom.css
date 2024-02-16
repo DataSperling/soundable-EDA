@@ -1,31 +1,3 @@
-
-Skip to content
-All gists
-Back to GitHub
-Sign in
-Sign up
-
-Instantly share code, notes, and snippets.
-@RalfG
-RalfG/custom-jupyter-notebook-css.md
-Created May 10, 2020 20:10
-
-Code
-Revisions 1
-Stars 3
-Clone this repository at &lt;script src=&quot;https://gist.github.com/RalfG/aaa0e2b5cf95302140dcd4b158828407.js&quot;&gt;&lt;/script&gt;
-custom-jupyter-notebook-css.md
-Custom Jupyter Notebook CSS
-
-A more modern style for Jupyter Notebooks, loosely based on @formigone's theme.
-
-To install, download custom.css and place it in site-packages/notebook/static/custom/. To find your site-packages directory, run the following Python script:
-
->>> from distutils.sysconfig import get_python_lib
->>> print(get_python_lib())
-
-The Cascadia Code font is used for code cells.
-
 image
 custom.css
 /* GENERAL */
@@ -243,5 +215,3 @@ Footer navigation
     Status
     Docs
     Contact
-
-
