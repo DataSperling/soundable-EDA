@@ -11,7 +11,7 @@ def gen_audio_array_baseline(
         step=1) -> npt.NDArray:
     if  not stop:
         stop = time * sampling_rate
-    return np.arange(start, stop, step, dtype=bit_depth) # np.linspace
+    return np.arange(start, stop, step, dtype=bit_depth)
 
 
 def gen_sine_wave():

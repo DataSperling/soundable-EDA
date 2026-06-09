@@ -1,20 +1,36 @@
 # jupyter
 *.ipynb_checkpoints
-.css
+*.ipynb
+*.css
 
 # media
 .mp3
 .wav
 filters
-scipyfft
+scipyfft/
+
+# python
+venv/
+__pycache__/
+*.pyc
+*.py[cod]
+*$py.class
+.pybuilder/
+target/
+profile_default/
+ipython_config.py
+.mypy_cache/
+.dmypy.json
+dmypy.json
 
 # system
 .directory
-.cpp
-
+*.cpp
 
 # R / R Studio
 .Rhistory
+.Rapp.history
+.Ruserdata
 
 # IDE
 .idea
