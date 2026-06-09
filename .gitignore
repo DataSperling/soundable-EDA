@@ -1,7 +1,20 @@
-# ignore persistent backup
+# jupyter
 *.ipynb_checkpoints
+.css
 
-# ignore audio file to save space
-*.mp3
-*.wav
+# media
+.mp3
+.wav
+filters
+scipyfft
 
+# system
+.directory
+.cpp
+
+
+# R / R Studio
+.Rhistory
+
+# IDE
+.idea
